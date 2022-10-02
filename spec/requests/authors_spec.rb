@@ -2,39 +2,39 @@ require 'rails_helper'
 
 RSpec.describe "Authors", type: :request do
 
-  before do 
+  before do
     author1 = Author.create(name: "Wilbert Green")
     author1.create_profile(
-      email: "wgreen@kshlerin.co", 
-      username: "willygreen", 
-      bio: "Keytar wolf bushwick seitan mumblecore try-hard marfa.", 
+      email: "wgreen@kshlerin.co",
+      username: "willygreen",
+      bio: "Keytar wolf bushwick seitan mumblecore try-hard marfa.",
       avatar_url: "https://robohash.org/voluptasquisnihil.png?size=300x300&set=set1"
     )
-    
+
     author2 = Author.create(name: "Sonya Wolf ")
     author2.create_profile(
-      email: "swolf@keeling.name", 
-      username: "sonyaw", 
-      bio: "Park bespoke diy selfies leggings shabby chic kombucha taxidermy.", 
+      email: "swolf@keeling.name",
+      username: "sonyaw",
+      bio: "Park bespoke diy selfies leggings shabby chic kombucha taxidermy.",
       avatar_url: "https://robohash.org/eosdoloremest.png?size=300x300&set=set1"
     )
-    
+
     post1 = author1.posts.create(
-      title: "A Monstrous Regiment of Women", 
+      title: "A Monstrous Regiment of Women",
       content: "Stumptown photo booth chartreuse next level biodiesel. Park narwhal cronut hammock helvetica."
     )
     post1.tags.create(name: "repellat")
     post1.tags.create(name: "qui")
-    
+
     post2 = author1.posts.create(
-      title: "Clouds of Witness", 
+      title: "Clouds of Witness",
       content: "Selfies pickled crucifix offal. Celiac art party godard narwhal retro freegan selvage gastropub. Leggings brunch biodiesel gastropub schlitz cold-pressed truffaut. Master hoodie chia banh mi offal knausgaard yolo. Authentic selfies twee pabst tumblr. Freegan keffiyeh cliche gastropub. Yr vinyl cliche synth freegan forage. Biodiesel food truck fixie lo-fi 8-bit drinking neutra."
     )
     post2.tags.create(name: "qui")
     post2.tags.create(name: "facere")
 
     post3 = author2.posts.create(
-      title: "Antic Hay", 
+      title: "Antic Hay",
       content: "Typewriter neutra five dollar toast plaid. Polaroid tumblr put a bird on it."
     )
     post3.tags.create(name: "occaecati")
@@ -46,7 +46,7 @@ RSpec.describe "Authors", type: :request do
   let!(:p2) { Post.second }
 
   describe "GET /authors" do
-    
+
     it "includes each author's name" do
       get "/authors"
       expect(response.body).to include_json([
@@ -101,7 +101,7 @@ RSpec.describe "Authors", type: :request do
         }
       ])
     end
-    
+
     it "includes each post's title and short_content" do
       get "/authors"
       expect(response.body).to include_json([
@@ -136,7 +136,7 @@ RSpec.describe "Authors", type: :request do
       ])
     end
   end
-  
+
   describe "GET /authors/:id" do
     it "includes the author's name" do
       get "/authors/#{a1.id}"
@@ -156,7 +156,7 @@ RSpec.describe "Authors", type: :request do
         }
       })
     end
-    
+
     it "includes each post's title and short_content" do
       get "/authors/#{a1.id}"
       expect(response.body).to include_json({
